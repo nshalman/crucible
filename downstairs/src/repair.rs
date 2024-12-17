@@ -30,7 +30,11 @@ pub struct FileServerContext {
 
 pub fn write_openapi<W: Write>(f: &mut W) -> Result<()> {
     let api = build_api();
-    api.openapi("Downstairs Repair", "0.0.0").write(f)?;
+    api.openapi(
+        "Downstairs Repair",
+        semver::Version::parse("0.0.0").unwrap(),
+    )
+    .write(f)?;
     Ok(())
 }
 
@@ -57,7 +61,7 @@ pub fn repair_main(
      */
     let config_dropshot = ConfigDropshot {
         bind_address: addr,
-        request_body_max_bytes: 1024,
+        default_request_body_max_bytes: 1024,
         default_handler_task_mode: HandlerTaskMode::Detached,
         log_headers: vec![],
     };

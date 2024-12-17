@@ -341,7 +341,8 @@ async fn main() -> Result<()> {
 
 fn write_openapi<W: Write>(f: &mut W) -> Result<()> {
     let api = server::make_api()?;
-    api.openapi("Crucible Agent", "0.0.0").write(f)?;
+    api.openapi("Crucible Agent", semver::Version::parse("0.0.0").unwrap())
+        .write(f)?;
     Ok(())
 }
 
